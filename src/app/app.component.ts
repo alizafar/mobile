@@ -6,6 +6,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
+// Import Auth0Cordova
+import Auth0Cordova from '@auth0/cordova';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -24,6 +27,11 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage }
     ];
+
+    // Redirect back to app after authenticating
+    (window as any).handleOpenURL = (url: string) => {
+      Auth0Cordova.onRedirectUri(url);
+    }
 
   }
 
