@@ -31,22 +31,27 @@ export class AuthService {
   login() {
     this.loading = true;
     const options = {
-      scope: 'openid profile offline_access'
+      scope: 'openid profile offline_access',
+      audience: 'https://xafar.com/api/'
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
       if (err) {
         throw err;
       }
+      
       // Set Access Token
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
+      
       // Set Access Token expiration
       const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
       this.storage.set('expires_at', expiresAt);
+      
       // Set logged in
       this.loading = false;
       this.loggedIn = true;
+      
       // Fetch user's profile info
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
         if (err) {

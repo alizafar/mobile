@@ -25,13 +25,15 @@
       color="primary"
       *ngIf="!auth.loggedIn"
       (click)="auth.login()">Log In</button>
-    <!-- Not loading, logged in: show profile and logout button -->
+    
+      <!-- Not loading, logged in: show profile and logout button -->
     <ng-template [ngIf]="auth.loggedIn">
       <ion-card *ngIf="auth.user">
         <img [src]="auth.user.picture">
         <ion-card-content>
           <ion-card-title>{{ auth.user.name }}</ion-card-title>
           <pre>{{ auth.user | json }}</pre>
+          <p>{{ auth.accessToken }}</p>
         </ion-card-content>
       </ion-card>
       <button
